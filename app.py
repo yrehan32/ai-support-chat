@@ -16,14 +16,6 @@ load_dotenv()
 # Define the path for generated embeddings
 DB_FAISS_PATH = 'vectorstore/db_faiss'
 
-#load the pdf files from the path
-loader = DirectoryLoader('data/',glob="*.pdf",loader_cls=PyPDFLoader)
-documents = loader.load()
-
-#split text into chunks
-text_splitter  = RecursiveCharacterTextSplitter(chunk_size=500,chunk_overlap=50)
-text_chunks = text_splitter.split_documents(documents)
-
 #create embeddings
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                    model_kwargs={'device':"cuda"})
