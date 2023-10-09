@@ -1,0 +1,10 @@
+{
+    "apps": [{
+        "name": "support-chatbot",
+        "script": "app.py",
+        "args": ["-w"],
+        "autorestart": true,
+        "interpreter" : "/usr/local/bin/streamlit",
+        "interpreter_args": "run"
+    }]
+}
