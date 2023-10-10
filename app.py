@@ -26,7 +26,7 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 vector_store = FAISS.load_local(DB_FAISS_PATH, embeddings)
 
 # Create llm
-llm = CTransformers(model="llama-2-7b-chat.ggmlv3.q2_K.bin",model_type="llama",
+llm = CTransformers(model=os.getenv('MODEL_FILE'), model_type="llama",
                     config={'max_new_tokens':256,'temperature':0.5})
 
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
