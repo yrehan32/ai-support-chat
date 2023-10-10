@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
+from torch import cuda
 from streamlit_chat import message
 from langchain.chains import ConversationalRetrievalChain
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
@@ -16,9 +17,12 @@ load_dotenv()
 # Define the path for generated embeddings
 DB_FAISS_PATH = 'vectorstore/db_faiss'
 
+# Device
+device = 'cuda' if cuda.is_available() else 'cpu'
+
 #create embeddings
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
-                                   model_kwargs={'device':"cuda"})
+                                   model_kwargs={'device':device})
 
 #vectorstore
 # vector_store = FAISS.from_documents(text_chunks,embeddings)
