@@ -4,10 +4,8 @@ from dotenv import load_dotenv
 from torch import cuda
 from streamlit_chat import message
 from langchain.chains import ConversationalRetrievalChain
-from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.llms import CTransformers
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.memory import ConversationBufferMemory
 
@@ -20,15 +18,14 @@ DB_FAISS_PATH = 'vectorstore/db_faiss'
 # Device
 device = 'cuda' if cuda.is_available() else 'cpu'
 
-#create embeddings
+# Create embeddings
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                    model_kwargs={'device':device})
 
-#vectorstore
-# vector_store = FAISS.from_documents(text_chunks,embeddings)
+# Vectorstore
 vector_store = FAISS.load_local(DB_FAISS_PATH, embeddings)
 
-#create llm
+# Create llm
 llm = CTransformers(model="llama-2-7b-chat.ggmlv3.q2_K.bin",model_type="llama",
                     config={'max_new_tokens':256,'temperature':0.5})
 
